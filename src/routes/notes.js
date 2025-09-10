@@ -20,6 +20,7 @@ router.post('/', (req, res) => {
 })
 
 router.patch('/:id', (req, res) => {
+    tempData[req.params.id] = req.body
     res.send({ text: req.body.text, id: req.params.id })
 })
 router.delete('/:id', (req, res) => {
