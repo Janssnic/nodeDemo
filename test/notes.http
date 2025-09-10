@@ -20,4 +20,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{apiURL}}/13
+DELETE {{apiURL}}/3

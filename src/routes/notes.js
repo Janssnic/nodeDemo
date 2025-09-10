@@ -24,6 +24,7 @@ router.patch('/:id', (req, res) => {
     res.send({ text: req.body.text, id: req.params.id })
 })
 router.delete('/:id', (req, res) => {
+    tempData.splice(req.params.id)
     res.send({ id: req.params.id })
 })
 
