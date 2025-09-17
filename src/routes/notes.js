@@ -1,5 +1,8 @@
 const express = require('express')
+const { PrismaClient } = require('@prisma/client')
+
 const router = express.Router()
+const prisma = new PrismaClient()
 
 const tempData = [
     { text: "moin" },
@@ -8,15 +11,35 @@ const tempData = [
     { text: "hola" },
     { text: "hallo" }
 ]
-router.get('/', (req, res) => {
-    res.send(tempData)
+router.get('/', async (req, res) => {
+    try {
+        const notes = await prisma.note.findMany(
+            // { where: {author_id: 1} }
+        )
+        res.json(notes)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ msg: "Error" })
+    }
 })
 
-router.post('/', (req, res) => {
-    res.send({ 
-        Method: "POST",
-        text: req.body.text 
+router.post('/', async (req, res) => {
+    try {
+        const newNote = await prisma.note.create({
+            data: {
+                author_id: 1,
+                note: req.body.text
+        }
     })
+
+res.json({ msg: "new note created!", newNote: newNote })
+
+    } catch (error) {
+    console.log(error)
+    res.status(500).send({ msg: "Error" })
+}
+
+
 })
 
 router.patch('/:id', (req, res) => {
